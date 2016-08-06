@@ -9,15 +9,13 @@
 [OPEN_WORKSPACE_FILES]
 "C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\GNU-Files\start.asm" 
 "C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-blinky.c" 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-full.c" 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\ParTest.c" 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Source\portable\GCC\RX600\portmacro.h" 
 "C:\FreeRTOSv9.0.0\FreeRTOS\Source\tasks.c" 
 [WORKSPACE_FILE_STATES]
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\GNU-Files\start.asm" 0 0 806 250 0 0 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\ParTest.c" 104 104 784 326 0 4 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-blinky.c" 52 52 810 254 0 2 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-full.c" 26 26 810 254 0 1 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Source\tasks.c" -8 -31 930 495 1 3 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\GNU-Files\start.asm" 26 26 806 220 0 0 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-blinky.c" -8 -31 930 425 1 1 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Source\portable\GCC\RX600\portmacro.h" 52 52 784 304 0 2 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Source\tasks.c" 0 0 810 282 0 3 
 [LOADED_PROJECTS]
 "RTOSDemo" 
 [END]

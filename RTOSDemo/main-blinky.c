@@ -79,12 +79,14 @@
  */
 
 /* Hardware specific includes. */
+#include <string.h>
 #include "iodefine.h"
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "semphr.h"
 
 /* Demo includes. */
 #include "ParTest.h"
@@ -93,6 +95,8 @@
 #define 	configQUEUE_RECEIVE_TASK_PRIORITY	( tskIDLE_PRIORITY + 2 )
 #define		configQUEUE_SEND_TASK_PRIORITY		( tskIDLE_PRIORITY + 1 )
 #define		configQUEUE_BLINKLED_TASK_PRIORITY		( tskIDLE_PRIORITY + 3 )
+
+#define MY_STACK_SZ	1024
 
 /* The rate at which data is sent to the queue, specified in milliseconds. */
 #define mainQUEUE_SEND_FREQUENCY_MS				( 100 / portTICK_PERIOD_MS )
@@ -110,6 +114,9 @@
 static void prvQueueReceiveTask(void *pvParameters);
 static void prvQueueSendTask(void *pvParameters);
 static void prvQueueBlinkOtherLED(void *pvParameters);
+
+static void prvQueueMutexSample1(void *pvParameters);
+static void prvQueueMutexSample2(void *pvParameters);
 
 /* The queue used by both tasks. */
 static QueueHandle_t xQueue = NULL;
@@ -142,6 +149,8 @@ static const LedBlinkDataT ARRLEDBLINKDATA[] =
 		{600,6}
 	};
 
+SemaphoreHandle_t xSemaphore;
+
 int main(void)
     {
     extern void HardwareSetup(void);
@@ -156,22 +165,32 @@ int main(void)
     /* Create the queue. */
     xQueue = xQueueCreate( mainQUEUE_LENGTH, sizeof(unsigned long));
 
+    xSemaphore = xSemaphoreCreateMutex();
+
     if (xQueue != NULL)
 	{
 	int ctr;
 	/* Start the two tasks as described at the top of this file. */
-	xTaskCreate(prvQueueReceiveTask, "Rx", configMINIMAL_STACK_SIZE, NULL,
+	xTaskCreate(prvQueueReceiveTask, "Rx", MY_STACK_SZ, NULL,
 		configQUEUE_RECEIVE_TASK_PRIORITY, NULL);
-	xTaskCreate(prvQueueSendTask, "TX", configMINIMAL_STACK_SIZE, NULL,
+	xTaskCreate(prvQueueSendTask, "TX", MY_STACK_SZ, NULL,
 		configQUEUE_SEND_TASK_PRIORITY, NULL);
 
+#if 0
 	for(ctr=0;ctr<NUMLEDBLINKDATA;ctr++)
 	    {
-	    xTaskCreate(prvQueueBlinkOtherLED, NULL, configMINIMAL_STACK_SIZE,
+	    xTaskCreate(prvQueueBlinkOtherLED, NULL, MY_STACK_SZ,
 	    		(void*) &(ARRLEDBLINKDATA[ctr]), configQUEUE_BLINKLED_TASK_PRIORITY,
 	    		NULL);
 	    }
-
+#else
+	xTaskCreate(prvQueueMutexSample1, NULL, MY_STACK_SZ,
+		    NULL, configQUEUE_BLINKLED_TASK_PRIORITY,
+		    NULL);
+	xTaskCreate(prvQueueMutexSample2, NULL, MY_STACK_SZ,
+		    NULL, configQUEUE_BLINKLED_TASK_PRIORITY,
+		    NULL);
+#endif
 
 	/* Start the tasks running. */
 	vTaskStartScheduler();
@@ -183,6 +202,52 @@ int main(void)
     for (;;)
 	;
     }
+
+/*-----------------------------------------------------------*/
+static void prvQueueMutexSample1(void *pvParameters)
+    {
+    TickType_t xNextWakeTime;
+    /* Initialise xNextWakeTime - this only needs to be done once. */
+//    xNextWakeTime = xTaskGetTickCount();
+    while(1)
+	{
+	if( xSemaphoreTake( xSemaphore, portMAX_DELAY ) == pdTRUE )
+	    {
+	    xNextWakeTime = xTaskGetTickCount();
+	    vTaskDelayUntil(&xNextWakeTime, getRtosDelay(1000));
+	    vParTestToggleLED(3);
+	    xSemaphoreGive(xSemaphore);
+	    }
+	vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
+	}
+    }
+
+
+
+
+/*-----------------------------------------------------------*/
+static void prvQueueMutexSample2(void *pvParameters)
+    {
+    TickType_t xNextWakeTime;
+    int ctr;
+    /* Initialise xNextWakeTime - this only needs to be done once. */
+    //xNextWakeTime = xTaskGetTickCount();
+    while(1)
+	{
+	if( xSemaphoreTake( xSemaphore, portMAX_DELAY ) == pdTRUE )
+	    {
+	    xNextWakeTime = xTaskGetTickCount();
+	    for(ctr=0;ctr<5;ctr++)
+		{
+		vTaskDelayUntil(&xNextWakeTime, getRtosDelay(150));
+		vParTestToggleLED(4);
+		}
+	    xSemaphoreGive(xSemaphore);
+	    }
+	vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
+	}
+    }
+
 /*-----------------------------------------------------------*/
 
 static void prvQueueBlinkOtherLED(void *pvParameters)
@@ -202,7 +267,7 @@ static void prvQueueBlinkOtherLED(void *pvParameters)
 
 	}
     }
-
+/*-----------------------------------------------------------*/
 static void prvQueueSendTask(void *pvParameters)
     {
     TickType_t xNextWakeTime;
