@@ -92,9 +92,12 @@
 /* Priorities at which the tasks are created. */
 #define 	configQUEUE_RECEIVE_TASK_PRIORITY	( tskIDLE_PRIORITY + 2 )
 #define		configQUEUE_SEND_TASK_PRIORITY		( tskIDLE_PRIORITY + 1 )
+#define		configQUEUE_BLINKLED_TASK_PRIORITY		( tskIDLE_PRIORITY + 3 )
 
 /* The rate at which data is sent to the queue, specified in milliseconds. */
-#define mainQUEUE_SEND_FREQUENCY_MS				( 500 / portTICK_PERIOD_MS )
+#define mainQUEUE_SEND_FREQUENCY_MS				( 100 / portTICK_PERIOD_MS )
+
+#define getRtosDelay(x)	(x/portTICK_PERIOD_MS)
 
 /* The number of items the queue can hold.  This is 1 as the receive task
 will remove items as they are added so the send task should always find the
@@ -106,6 +109,7 @@ queue empty. */
  */
 static void prvQueueReceiveTask( void *pvParameters );
 static void prvQueueSendTask( void *pvParameters );
+static void prvQueueBlinkOtherLED( void *pvParameters );
 
 /* The queue used by both tasks. */
 static QueueHandle_t xQueue = NULL;
@@ -131,6 +135,7 @@ extern void HardwareSetup( void );
 		/* Start the two tasks as described at the top of this file. */
 		xTaskCreate( prvQueueReceiveTask, "Rx", configMINIMAL_STACK_SIZE, NULL, configQUEUE_RECEIVE_TASK_PRIORITY, NULL );
 		xTaskCreate( prvQueueSendTask, "TX", configMINIMAL_STACK_SIZE, NULL, configQUEUE_SEND_TASK_PRIORITY, NULL );
+		xTaskCreate( prvQueueBlinkOtherLED, "blinkLED", configMINIMAL_STACK_SIZE, NULL, configQUEUE_BLINKLED_TASK_PRIORITY, NULL );
 
 		/* Start the tasks running. */
 		vTaskStartScheduler();
@@ -142,6 +147,24 @@ extern void HardwareSetup( void );
 	for( ;; );
 }
 /*-----------------------------------------------------------*/
+
+static void prvQueueBlinkOtherLED( void *pvParameters )
+{
+	TickType_t xNextWakeTime;
+
+		/* Initialise xNextWakeTime - this only needs to be done once. */
+		xNextWakeTime = xTaskGetTickCount();
+
+		for( ;; )
+		{
+			/* Place this task in the blocked state until it is time to run again.
+			The block state is specified in ticks, the constant used converts ticks
+			to ms. */
+			vTaskDelayUntil( &xNextWakeTime, getRtosDelay(500)  );
+			vParTestToggleLED( 1 );
+
+		}
+}
 
 static void prvQueueSendTask( void *pvParameters )
 {
