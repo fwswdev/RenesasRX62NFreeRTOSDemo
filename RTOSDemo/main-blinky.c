@@ -122,14 +122,25 @@ typedef struct
 	int portNum;
     } LedBlinkDataT;
 
-static const LedBlinkDataT LedBlinkData1 =
-    {
-    300, 1
-    };
-static const LedBlinkDataT LedBlinkData2 =
-    {
-    400, 2
-    };
+//static const LedBlinkDataT LedBlinkData1 =
+//    {
+//    300, 1
+//    };
+//static const LedBlinkDataT LedBlinkData2 =
+//    {
+//    400, 2
+//    };
+
+#define NUMLEDBLINKDATA 6
+static const LedBlinkDataT ARRLEDBLINKDATA[] =
+	{
+		{100, 1},
+		{200,2},
+		{300,3},
+		{400,4},
+		{500,5},
+		{600,6}
+	};
 
 int main(void)
     {
@@ -147,17 +158,20 @@ int main(void)
 
     if (xQueue != NULL)
 	{
+	int ctr;
 	/* Start the two tasks as described at the top of this file. */
 	xTaskCreate(prvQueueReceiveTask, "Rx", configMINIMAL_STACK_SIZE, NULL,
 		configQUEUE_RECEIVE_TASK_PRIORITY, NULL);
 	xTaskCreate(prvQueueSendTask, "TX", configMINIMAL_STACK_SIZE, NULL,
 		configQUEUE_SEND_TASK_PRIORITY, NULL);
-	xTaskCreate(prvQueueBlinkOtherLED, "blinkLED", configMINIMAL_STACK_SIZE,
-		(void*) &LedBlinkData1, configQUEUE_BLINKLED_TASK_PRIORITY,
-		NULL);
-	xTaskCreate(prvQueueBlinkOtherLED, "blinkLED2",
-		configMINIMAL_STACK_SIZE, (void*) &LedBlinkData2,
-		configQUEUE_BLINKLED_TASK_PRIORITY, NULL);
+
+	for(ctr=0;ctr<NUMLEDBLINKDATA;ctr++)
+	    {
+	    xTaskCreate(prvQueueBlinkOtherLED, NULL, configMINIMAL_STACK_SIZE,
+	    		(void*) &(ARRLEDBLINKDATA[ctr]), configQUEUE_BLINKLED_TASK_PRIORITY,
+	    		NULL);
+	    }
+
 
 	/* Start the tasks running. */
 	vTaskStartScheduler();
