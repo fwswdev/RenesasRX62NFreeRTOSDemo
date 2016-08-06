@@ -218,7 +218,8 @@ static void prvQueueMutexSample1(void *pvParameters)
 	    vParTestToggleLED(3);
 	    xSemaphoreGive(xSemaphore);
 	    }
-	vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
+	//vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
+	taskYIELD();
 	}
     }
 
@@ -244,7 +245,8 @@ static void prvQueueMutexSample2(void *pvParameters)
 		}
 	    xSemaphoreGive(xSemaphore);
 	    }
-	vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
+		taskYIELD();
+	//vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
 	}
     }
 
