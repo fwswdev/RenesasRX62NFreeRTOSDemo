@@ -135,7 +135,8 @@ extern void HardwareSetup( void );
 		/* Start the two tasks as described at the top of this file. */
 		xTaskCreate( prvQueueReceiveTask, "Rx", configMINIMAL_STACK_SIZE, NULL, configQUEUE_RECEIVE_TASK_PRIORITY, NULL );
 		xTaskCreate( prvQueueSendTask, "TX", configMINIMAL_STACK_SIZE, NULL, configQUEUE_SEND_TASK_PRIORITY, NULL );
-		xTaskCreate( prvQueueBlinkOtherLED, "blinkLED", configMINIMAL_STACK_SIZE, NULL, configQUEUE_BLINKLED_TASK_PRIORITY, NULL );
+		xTaskCreate( prvQueueBlinkOtherLED, "blinkLED", configMINIMAL_STACK_SIZE, 1, configQUEUE_BLINKLED_TASK_PRIORITY, NULL );
+		xTaskCreate( prvQueueBlinkOtherLED, "blinkLED2", configMINIMAL_STACK_SIZE, 2, configQUEUE_BLINKLED_TASK_PRIORITY, NULL );
 
 		/* Start the tasks running. */
 		vTaskStartScheduler();
@@ -151,7 +152,7 @@ extern void HardwareSetup( void );
 static void prvQueueBlinkOtherLED( void *pvParameters )
 {
 	TickType_t xNextWakeTime;
-
+	int p = (int)((int*)pvParameters);
 		/* Initialise xNextWakeTime - this only needs to be done once. */
 		xNextWakeTime = xTaskGetTickCount();
 
@@ -161,7 +162,7 @@ static void prvQueueBlinkOtherLED( void *pvParameters )
 			The block state is specified in ticks, the constant used converts ticks
 			to ms. */
 			vTaskDelayUntil( &xNextWakeTime, getRtosDelay(500)  );
-			vParTestToggleLED( 1 );
+			vParTestToggleLED( p );
 
 		}
 }
