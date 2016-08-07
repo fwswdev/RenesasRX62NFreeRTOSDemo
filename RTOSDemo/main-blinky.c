@@ -206,19 +206,14 @@ int main(void)
 /*-----------------------------------------------------------*/
 static void prvQueueMutexSample1(void *pvParameters)
     {
-    TickType_t xNextWakeTime;
-    /* Initialise xNextWakeTime - this only needs to be done once. */
-//    xNextWakeTime = xTaskGetTickCount();
     while(1)
 	{
 	if( xSemaphoreTake( xSemaphore, portMAX_DELAY ) == pdTRUE )
 	    {
-	    xNextWakeTime = xTaskGetTickCount();
-	    vTaskDelayUntil(&xNextWakeTime, getRtosDelay(1000));
+	    vTaskDelay(getRtosDelay(1000));
 	    vParTestToggleLED(3);
 	    xSemaphoreGive(xSemaphore);
 	    }
-	//vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
 	taskYIELD();
 	}
     }
@@ -229,24 +224,19 @@ static void prvQueueMutexSample1(void *pvParameters)
 /*-----------------------------------------------------------*/
 static void prvQueueMutexSample2(void *pvParameters)
     {
-    TickType_t xNextWakeTime;
     int ctr;
-    /* Initialise xNextWakeTime - this only needs to be done once. */
-    //xNextWakeTime = xTaskGetTickCount();
     while(1)
 	{
 	if( xSemaphoreTake( xSemaphore, portMAX_DELAY ) == pdTRUE )
 	    {
-	    xNextWakeTime = xTaskGetTickCount();
 	    for(ctr=0;ctr<5;ctr++)
 		{
-		vTaskDelayUntil(&xNextWakeTime, getRtosDelay(150));
+		vTaskDelay(getRtosDelay(150));
 		vParTestToggleLED(4);
 		}
 	    xSemaphoreGive(xSemaphore);
 	    }
-		taskYIELD();
-	//vTaskDelayUntil(&xNextWakeTime, getRtosDelay(10));
+	taskYIELD();
 	}
     }
 
