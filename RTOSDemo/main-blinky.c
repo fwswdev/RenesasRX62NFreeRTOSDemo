@@ -260,14 +260,16 @@ static void prvQueueBlinkOtherLED(void *pvParameters)
 	}
     }
 /*-----------------------------------------------------------*/
+#define VALUE_TO_COMPARE 105UL
+
 static void prvQueueSendTask(void *pvParameters)
     {
     TickType_t xNextWakeTime;
-    const unsigned long ulValueToSend = 100UL;
+    const unsigned long ulValueToSend = VALUE_TO_COMPARE;
 
     /* Initialise xNextWakeTime - this only needs to be done once. */
     xNextWakeTime = xTaskGetTickCount();
-
+    int ctr = 0;
     for (;;)
 	{
 	/* Place this task in the blocked state until it is time to run again.
@@ -279,6 +281,13 @@ static void prvQueueSendTask(void *pvParameters)
 	 is used so the send does not block - it shouldn't need to as the queue
 	 should always be empty here. */
 	xQueueSend(xQueue, &ulValueToSend, 0);
+#if 1 // we are testing here the task suspension
+	ctr++;
+	if(ctr==20)
+	    {
+	    vTaskSuspend(NULL);
+	    }
+#endif
 	}
     }
 /*-----------------------------------------------------------*/
@@ -296,7 +305,7 @@ static void prvQueueReceiveTask(void *pvParameters)
 
 	/*  To get here something must have arrived, but is it the expected
 	 value?  If it is, toggle the LED. */
-	if (ulReceivedValue == 100UL)
+	if (ulReceivedValue == VALUE_TO_COMPARE)
 	    {
 	    vParTestToggleLED(0);
 	    }
