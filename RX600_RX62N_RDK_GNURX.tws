@@ -19,7 +19,7 @@
 "C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\ParTest.c" 0 0 862 154 0 5 
 "C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-blinky.c" 52 52 836 196 0 2 
 "C:\FreeRTOSv9.0.0\FreeRTOS\Source\queue.c" 130 130 784 326 0 1 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Source\tasks.c" -8 -31 930 463 1 4 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Source\tasks.c" -8 -31 930 328 1 4 
 [LOADED_PROJECTS]
 "RTOSDemo" 
 [END]
