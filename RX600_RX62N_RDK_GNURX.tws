@@ -7,19 +7,21 @@
 [GENERAL_DATA]
 [BREAKPOINTS]
 [OPEN_WORKSPACE_FILES]
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\FreeRTOSConfig.h" 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\ethernet\FreeTCPIP\apps\httpd\httpd-fs.c" 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\ethernet\FreeTCPIP\apps\httpd\httpd.c" 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\ethernet\FreeTCPIP\uip.c" 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\Minimal\flop.c" 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\Minimal\integer.c" 
 "C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\GNU-Files\start.asm" 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-blinky.c" 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\ParTest.c" 
 "C:\FreeRTOSv9.0.0\FreeRTOS\Source\queue.c" 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Source\tasks.c" 
 [WORKSPACE_FILE_STATES]
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\FreeRTOSConfig.h" 0 0 758 332 0 3 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\GNU-Files\start.asm" 104 104 780 322 0 0 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\ParTest.c" 0 0 862 154 0 5 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\main-blinky.c" 52 52 836 196 0 2 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Source\queue.c" 130 130 784 326 0 1 
-"C:\FreeRTOSv9.0.0\FreeRTOS\Source\tasks.c" -8 -31 930 463 1 4 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\Minimal\flop.c" 104 104 810 232 0 3 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\Minimal\integer.c" -8 -31 930 375 1 6 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\ethernet\FreeTCPIP\apps\httpd\httpd-fs.c" 0 0 810 232 0 4 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\ethernet\FreeTCPIP\apps\httpd\httpd.c" 26 26 806 244 0 0 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\Common\ethernet\FreeTCPIP\uip.c" 52 52 810 248 0 1 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Demo\RX600_RX62N-RDK_GNURX\RTOSDemo\GNU-Files\start.asm" 78 78 810 248 0 2 
+"C:\FreeRTOSv9.0.0\FreeRTOS\Source\queue.c" 26 26 810 232 0 5 
 [LOADED_PROJECTS]
 "RTOSDemo" 
 [END]
